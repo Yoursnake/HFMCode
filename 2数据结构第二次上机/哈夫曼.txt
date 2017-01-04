@@ -1,0 +1,48 @@
+public void outputHuffmanCoding() {
+		int[] a = new int[10];
+		File textfile = new File("textfile.txt");
+		File codefile = new File("codefile.txt");
+
+		 FileWriter fileWritter1 = null,fileWritter2 = null;
+		try {
+			if (!textfile.exists())
+				textfile.createNewFile();
+			if (!codefile.exists())
+				codefile.createNewFile();
+			fileWritter1 = new FileWriter(textfile.getName(),true);
+			BufferedWriter bufferWritter1 = new BufferedWriter(fileWritter1);
+			fileWritter2 = new FileWriter(codefile.getName(),true);
+			BufferedWriter bufferWritter2 = new BufferedWriter(fileWritter2);
+			outputHuffmanCoding(this.root, 0, a,textfile,codefile,bufferWritter1,bufferWritter2);
+			bufferWritter1.close();
+			bufferWritter2.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void outputHuffmanCoding(BTreeNode ft, int len,int[] a,File textfile, File codefile,BufferedWriter bufferWritter1,BufferedWriter bufferWritter2) {
+		if (ft != null) {
+			if(ft.left == null && ft.right == null) {
+				System.out.print("节点 "+wcmap.get((Integer)ft.element)+" 权值为 "+(Integer)ft.element+" 编码为：");
+				try {
+					bufferWritter1.write(wcmap.get((Integer)ft.element)+"\r\n");
+					for(int i = 0; i<len; i++) {
+						System.out.print(a[i]+" ");
+						bufferWritter2.write(a[i]+"");
+					}
+					bufferWritter2.write("\r\n");
+					System.out.println();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else {
+				a[len] = 0;
+				outputHuffmanCoding(ft.left, len+1, a,textfile,codefile,bufferWritter1,bufferWritter2);
+				a[len] = 1;
+				outputHuffmanCoding(ft.right, len+1, a,textfile,codefile,bufferWritter1,bufferWritter2);
+			}
+		}
+	}
