@@ -180,11 +180,11 @@ void SuccOrd(void(*Visit)(BTNode* u), BTNode *t, Queue *q){
 	BTNode *a = NewNode();
 
 	inQueue(t, q);
-	while (q->Size){				//当队列中没有元素时终止循环
-		*a = outQueue(q);			//每次循环都出队一个元素
+	while (q->Size){			
+		*a = outQueue(q);		
 		(*Visit)(a);
 		if (a->Lchild != NULL){
-			inQueue(a->Lchild,q);	//每次循环都把出队的元素的左子树的结点和右子树的结点入队
+			inQueue(a->Lchild,q);
 		}
 		if (a->Rchild != NULL){
 			inQueue(a->Rchild, q);
